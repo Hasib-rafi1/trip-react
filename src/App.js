@@ -4,8 +4,7 @@ import { useState, useEffect,Fragment } from 'react';
 import axios from 'axios'
 
 function App() {
-  {/*url to adopt the host*/}
-  const api_url='http://35.202.248.176/'
+  const api_url='http://35.202.248.176'
   const initialState = {
         start_date:"",
         retun_date:null,
@@ -26,7 +25,6 @@ function App() {
         filtter:"",
     }
 
-    {/* bind state wiht return date*/}
     const returnFunc = (e) => {
 
             setdata({
@@ -37,7 +35,6 @@ function App() {
 
     }
 
-    {/* deny the airlines */}
     const deny = (e) => {
             if(e.target.checked){
               data.filtter_air.push(e.target.value)
@@ -57,7 +54,6 @@ function App() {
 
     }
 
-    {/* calling api for trip search*/}
     const searchflight=(e)=>{
         e.preventDefault();
         if(data.start_date==="" || data.deperture_from==="" || data.arrival_from==="" ){
@@ -69,7 +65,6 @@ function App() {
 
     }
 
-    {/* reusable call function for trip*/}
     const getTrips=()=>{
       axios.get(api_url+'/api/tripbuild?start_date='+data.start_date+'&retun_date='+data.retun_date+'&deperture_from='+data.deperture_from+'&arrival_from='+data.arrival_from+'&two_way='+data.two_way+'&by_price='+data.by_price+'&filter='+data.filtter.replace(',','_')+'&page='+data.page).then((res) => {
           console.log(res)
@@ -104,8 +99,7 @@ function App() {
 
     }
 
-    {/* converting dates to larvel api friendly for timezone check*/}
-    const startDate=(e)=>{
+  const startDate=(e)=>{
       let d = new Date(e.target.value);
       let month = '-' + (d.getMonth() + 1);
       let day = d.getDate();
@@ -119,7 +113,6 @@ function App() {
       });
 
     }
-    {/* converting dates to larvel api friendly for timezone check*/}
     const endDate=(e)=>{
       let d = new Date(e.target.value);
       let month = '-' + (d.getMonth() + 1);
@@ -215,7 +208,7 @@ function App() {
 
       fetchMyAPI()
 
-    },[])
+    })
 
 
   return (
@@ -311,7 +304,7 @@ function App() {
           <div className="clearfix"></div>
           <br></br>
           {console.log(data.trips.length)}
-          <h2 hidden={data.trips.length==0? false: true}>No Flight to Show</h2>
+          <h2 hidden={data.trips.length===0? false: true}>No Flight to Show</h2>
           {data.trips.map((trip) =>
             <Fragment key={trip.index}>
           <div className="offset-2">
@@ -349,13 +342,13 @@ function App() {
       <div className="clearfix"></div>
       <br></br><hr></hr>
       </Fragment>)}
-      <div hidden={data.trips.length==0? true: false} className="hpadding20">
+      <div hidden={data.trips.length===0? true: false} className="hpadding20">
 
         <ul className="pagination right paddingbtm20">
 
           {data.count_pagi.map((pagi,index) =>
 
-          <li key={pagi}><a data-key={pagi} onClick={pagina}>{pagi}</a></li>)}
+          <li key={pagi}><button  data-key={pagi} onClick={pagina}>{pagi}</button></li>)}
         </ul>
 
       </div>
